@@ -1,0 +1,21 @@
+app-id: org.troodon80.eekeeperqt
+runtime: org.kde.Platform
+runtime-version: '5.15-21.08'
+sdk: org.kde.Sdk
+command: EEKeeper
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host
+  - --device=dri
+modules:
+  - name: EEKeeper
+    buildsystem: simple
+    build-commands:
+      - qmake -o build/Makefile EEKeeper.pro
+      - cd build && make -j$(nproc)
+      - install -D build/EEKeeper /app/bin/EEKeeper
+    sources:
+      - type: git
+        url: https://github.com/Troodon80/eekeeper-qt
